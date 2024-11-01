@@ -1,0 +1,108 @@
+<style>
+    .featured_unicorn{
+      
+    }
+    .featured_unicorn h2{
+      color: var(--Stormy, #323334);
+      text-align: center;
+      font-family: "Fraunces 72pt";
+      font-size: 36px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 42px; /* 116.667% */
+      letter-spacing: -0.72px;
+      padding:24px;
+      margin:0;
+    }
+    .featured_unicorn .inner_featured_unicorn{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:30px;
+    }
+    .unicorn_image img{
+      width:100%;
+      height:auto;
+      object-fit:contain;
+    }
+    .unicorn_bottom{
+      display:flex;
+      justify-content:space-between;
+    }
+    .unicorn_bottom span{
+      display:flex;
+      align-items:center;
+    }
+     @media screen and (max-width: 991px) {
+       .featured_unicorn .inner_featured_unicorn{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:30px;
+    }
+     }
+  </style>
+  <section class="featured_unicorn">
+          <div class="container">
+             {% if section.settings.headline != blank %}
+                     <h2>{{ section.settings.headline }}</h2>
+                    {% endif %}
+              <div class="inner_featured_unicorn">
+                {% for block in section.blocks %}
+                  <div class="unicorn">
+                    <div class="unicorn_image">
+                       {% if block.settings.image != blank %}
+                   {{ block.settings.image | image_url:width:block.settings.image.width | image_tag:loading:'lazy' }}
+                    {% endif %}
+                    </div>
+                    <div class="unicorn_bottom">
+                    {% if block.settings.title != blank %}
+                     <h4>{{ block.settings.title }}</h4>
+                    {% endif %}
+                     {% if block.settings.price != blank %}
+                     <span>{{ block.settings.price }}</span>
+                    {% endif %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+          </div>
+  </section>
+  {% schema %}
+    {
+      "name": "featured product",
+      "settings": [
+          {
+    "type": "text",
+    "id": "headline",
+    "label": "headline",
+     "default":"Featured Unicorn Listings"
+    },
+      ],
+      "blocks":[
+        {
+          "type": "block",
+          "name":"block",
+          "settings": [
+              {
+    "type": "image_picker",
+    "id": "image",
+    "label": "Image"
+    },
+            
+              {
+    "type": "text",
+    "id": "title",
+    "label": "Title",
+     "default":"NATIVE IRON CHAIR"
+    },
+                        {
+    "type": "text",
+    "id": "price",
+    "label": "Price",
+     "default":"$4,990"
+    },
+          ]
+        }
+      ],
+      "presets": [{"name": "featured product"}]
+    }
+  {% endschema %}
